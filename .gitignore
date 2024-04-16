@@ -88,4 +88,5 @@ src/x64
 /*[Bb]uild*/
 .vs/
 .vscode/
+.idea/
 CMakeSettings.json
