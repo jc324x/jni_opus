@@ -14,6 +14,10 @@ include(GNUInstallDirs)
 include(CMakeDependentOption)
 include(FeatureSummary)
 
+# ⑂
+find_package(JNI REQUIRED)
+include_directories(${JNI_INCLUDE_DIRS})
+
 set(OPUS_BUILD_SHARED_LIBRARY_HELP_STR "build shared library.")
 option(OPUS_BUILD_SHARED_LIBRARY ${OPUS_BUILD_SHARED_LIBRARY_HELP_STR} OFF)
 if(OPUS_BUILD_SHARED_LIBRARY OR BUILD_SHARED_LIBS OR OPUS_BUILD_FRAMEWORK)
@@ -742,3 +746,4 @@ if(BUILD_TESTING AND NOT BUILD_SHARED_LIBS)
           -P "${PROJECT_SOURCE_DIR}/cmake/RunTest.cmake")
   endif()
 endif()
+
