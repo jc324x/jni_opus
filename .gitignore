@@ -90,3 +90,7 @@ src/x64
 .vscode/
 .idea/
 CMakeSettings.json
+
+/dnn
+/CMakeFiles
+CMakeCache.txt

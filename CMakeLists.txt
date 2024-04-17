@@ -14,10 +14,6 @@ include(GNUInstallDirs)
 include(CMakeDependentOption)
 include(FeatureSummary)
 
-# ⑂
-find_package(JNI REQUIRED)
-include_directories(${JNI_INCLUDE_DIRS})
-
 set(OPUS_BUILD_SHARED_LIBRARY_HELP_STR "build shared library.")
 option(OPUS_BUILD_SHARED_LIBRARY ${OPUS_BUILD_SHARED_LIBRARY_HELP_STR} OFF)
 if(OPUS_BUILD_SHARED_LIBRARY OR BUILD_SHARED_LIBS OR OPUS_BUILD_FRAMEWORK)
@@ -266,6 +262,7 @@ set_package_properties(Git
 
 set(Opus_PUBLIC_HEADER
     ${CMAKE_CURRENT_SOURCE_DIR}/include/opus.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/include/opus_jni.h
     ${CMAKE_CURRENT_SOURCE_DIR}/include/opus_defines.h
     ${CMAKE_CURRENT_SOURCE_DIR}/include/opus_multistream.h
     ${CMAKE_CURRENT_SOURCE_DIR}/include/opus_projection.h
@@ -286,6 +283,10 @@ endif()
 add_library(opus ${opus_headers} ${opus_sources} ${opus_sources_float} ${Opus_PUBLIC_HEADER})
 add_library(Opus::opus ALIAS opus)
 
+# ***** FORK *****
+find_package(JNI REQUIRED)
+include_directories(${JNI_INCLUDE_DIRS})
+
 get_library_version(OPUS_LIBRARY_VERSION OPUS_LIBRARY_VERSION_MAJOR)
 message(DEBUG "Opus library version: ${OPUS_LIBRARY_VERSION}")
 
@@ -300,6 +301,7 @@ set_target_properties(opus
 target_include_directories(
   opus
   PUBLIC $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
+#        $<BUILD_INTERFACE:${JNI_INCLUDE_DIRS}>
          $<INSTALL_INTERFACE:${CMAKE_INSTALL_INCLUDEDIR}>
          $<INSTALL_INTERFACE:${CMAKE_INSTALL_INCLUDEDIR}/opus>
   PRIVATE ${CMAKE_CURRENT_BINARY_DIR}
