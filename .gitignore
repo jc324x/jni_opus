@@ -94,3 +94,4 @@ CMakeSettings.json
 /dnn
 /CMakeFiles
 CMakeCache.txt
+/tests/test_opus_dred
