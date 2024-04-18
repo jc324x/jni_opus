@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 1996, 2020, Oracle and/or its affiliates. All rights reserved.
+ * Copyright (c) 1999, Oracle and/or its affiliates. All rights reserved.
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
  *
  * This code is free software; you can redistribute it and/or modify it
@@ -23,18 +23,37 @@
  * questions.
  */
 
-#ifndef _JAVASOFT_JNI_MD_H_
-#define _JAVASOFT_JNI_MD_H_
+#ifndef _JAVASOFT_JAWT_MD_H_
+#define _JAVASOFT_JAWT_MD_H_
 
-#ifndef JNIEXPORT
-  #define JNIEXPORT __declspec(dllexport)
+#include <windows.h>
+#include "jawt.h"
+
+#ifdef __cplusplus
+extern "C" {
 #endif
-#define JNIIMPORT __declspec(dllimport)
-#define JNICALL __stdcall
 
-// 'long' is always 32 bit on windows so this matches what jdk expects
-typedef long jint;
-typedef __int64 jlong;
-typedef signed char jbyte;
+/*
+ * Win32-specific declarations for AWT native interface.
+ * See notes in jawt.h for an example of use.
+ */
+typedef struct jawt_Win32DrawingSurfaceInfo {
+    /* Native window, DDB, or DIB handle */
+    union {
+        HWND hwnd;
+        HBITMAP hbitmap;
+        void* pbits;
+    };
+    /*
+     * This HDC should always be used instead of the HDC returned from
+     * BeginPaint() or any calls to GetDC().
+     */
+    HDC hdc;
+    HPALETTE hpalette;
+} JAWT_Win32DrawingSurfaceInfo;
 
-#endif /* !_JAVASOFT_JNI_MD_H_ */
+#ifdef __cplusplus
+}
+#endif
+
+#endif /* !_JAVASOFT_JAWT_MD_H_ */
