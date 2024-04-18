@@ -986,6 +986,34 @@ case $host in
   ;;
 esac
 
+##### COMPOZE LABS START #####
+
+build_linux=no
+build_windows=no
+build_mac=no
+
+# Detect the target system
+case "${host_os}" in
+    linux*)
+        build_linux=yes
+        ;;
+    cygwin*|mingw*)
+        build_windows=yes
+        ;;
+    darwin*)
+        build_mac=yes
+        ;;
+    *)
+        AC_MSG_ERROR(["OS $host_os is not supported"])
+        ;;
+esac
+
+AM_CONDITIONAL([LINUX], [test "$build_linux" = "yes"])
+AM_CONDITIONAL([WINDOWS], [test "$build_windows" = "yes"])
+AM_CONDITIONAL([MACOS], [test "$build_mac" = "yes"])
+
+##### COMPOZE LABS END #####
+
 dnl Enable stack-protector-all only on x86 where it's well supported.
 dnl on some platforms it causes crashes. Hopefully the OS's default's
 dnl include this on platforms that work but have been missed here.

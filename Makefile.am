@@ -126,7 +126,14 @@ CLEANFILES = $(CELT_SOURCES_ARM_ASM:.s=-gnu.S) \
 include celt_headers.mk
 include lpcnet_headers.mk
 include silk_headers.mk
-include opus_headers.mk
+
+##### COMPOZE LABS START #####
+if WINDOWS
+include jni_opus_headers_windows.mk
+else
+include jni_opus_headers_macos.mk
+endif
+##### COMPOZE LABS END #####
 
 LPCNET_HEAD =
 if ENABLE_DEEP_PLC
@@ -368,7 +375,6 @@ opus check-opus install-opus: export NO_DOXYGEN = 1
 opus: all
 check-opus: check
 install-opus: install
-
 
 # Or just the docs
 docs:
